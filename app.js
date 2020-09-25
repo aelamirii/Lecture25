@@ -60,7 +60,8 @@ function MenuCategoriesService($http) {
 
     var response = $http({
       method: "GET",
-      url: ("http://davids-restaurant.herokuapp.com/categories.json")
+      // url: ("http://davids-restaurant.herokuapp.com/categories.json")
+      url: ("https://github.com/aelamirii/Lecture25/blob/master/Categories.json")
     });
 
     return response;
