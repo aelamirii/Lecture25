@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" ng-app = "MenuCategoriesApp">
+  <head>
+    <meta charset="utf-8">
+    <script src = "angular.min.js"></script>
+    <script src = "app1.js"></script>
+    <title> Using $http Service </title>
+  </head>
+  <body>
+
+    <h1>  Using $http Service  </h1>
+
+    <div ng-controller = "MenuCategoriesController as menu">
+
+      <ul>
+        <li ng-repeat = "category in menu.categories">
+
+          (<a href="" ng-click = "menu.logMenuItems(category.short_name);">
+            {{ category.id }} </a>)
+
+          {{ category.short_name }}
+          {{ category.name }} /
+          {{ category.special_instructions }}
+          <!-- {{ category.ID }}
+          {{ category.Name }}
+          {{ category.Type }} -->
+        </li>
+      </ul>
+
+      <table border = "1">
+        <tr>
+          <th>ID</th>
+          <th>Short Name</th>
+          <th>Name</th>
+          <th>Special Instruction</th>
+        </tr>
+        <tr ng-repeat = "category in menu.categories">
+          <td> (<a href="" ng-click = "menu.logMenuItems(category.short_name);">
+            {{ category.id }} </a>)  </td>
+          <td> {{ category.short_name }}  </td>
+          <td> {{ category.name }}  </td>
+          <td> {{ category.special_instructions }}  </td>
+        </tr>
+      </table>
+
+    </div>
+
+  </body>
+</html>

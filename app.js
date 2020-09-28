@@ -3,7 +3,8 @@
 
 angular.module('MenuCategoriesApp', [])
 .controller('MenuCategoriesController', MenuCategoriesController)
-.service('MenuCategoriesService', MenuCategoriesService);
+.service('MenuCategoriesService', MenuCategoriesService)
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com" );
 
 
 
@@ -50,8 +51,8 @@ function MenuCategoriesController(MenuCategoriesService) {
 
 
 
-MenuCategoriesService.$inject = ['$http']
-function MenuCategoriesService($http) {
+MenuCategoriesService.$inject = ['$http', 'ApiBasePath']
+function MenuCategoriesService($http, ApiBasePath) {
 
 
   var service = this;
@@ -61,7 +62,7 @@ function MenuCategoriesService($http) {
     var response = $http({
       method: "GET",
       // url: ("http://davids-restaurant.herokuapp.com/categories.json")
-      url: ("https://github.com/aelamirii/Lecture25/blob/master/Categories.json")
+      url: (ApiBasePath + "/categories.json")
     });
 
     return response;
@@ -74,10 +75,10 @@ function MenuCategoriesService($http) {
 
    var response = $http({
      method: "GET",
-     url: ("http://davids-restaurant.herokuapp.com/categories.json"),
      // url: ("https://davids-restaurant.herokuapp.com/menu_items.json"),
+     url: (ApiBasePath + "/menu_items.json"),
      params: {
-       short_name: shortName
+       category: shortName
      }
    });
 
