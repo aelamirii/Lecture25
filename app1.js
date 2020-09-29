@@ -30,19 +30,15 @@ function MenuCategoriesController(MenuCategoriesService) {
 
       var Items = [];
 
-      // for( var i in response.data)
-      // {
-      //   console.log("i =", i);
-      //   console.log("Response: ",response.data[i]);
-      // }
 
-// console.log("ddddddd "+response.data.items.length);
-//       for( var i = 0; i < response.data.length ; i++)
+
+// console.log("ddddddd "+response.data.menu_items.length);
+//       for( var i = 0; i < response.data.menu_items.length ; i++)
 //       {
-//         console.log("aaaaaaaaaa ",response[i]);
-//           if(response[i].indexOf(Short_Name) !== -1)
+//         console.log("aaaaaaaaaa :",response.data.menu_items[i].name, ":");
+//           if(response.data.menu_items[i].short_name.indexOf(Short_Name) !== -1)
 //           {
-//             console.log("response.data.items["+i+"]",response.data[i]);
+//             console.log("response.data.items["+i+"]",response.data.menu_items[i].short_name);
 //           }
 //       }
 
@@ -83,13 +79,16 @@ function MenuCategoriesService($http) {
   };
 
 
-  service.getMenuForCategory = function (Short_Name) {
+  service.getMenuForCategory = function (ShortName) {
 
     var response = $http({
       method: "GET",
+      // url: "http://localhost:3000/menu_items.json",
+      // url: ("https://jsonplaceholder.typicode.com/comments"),
+      // url: ("http://davids-restaurant.herokuapp.com/categories.json"),
       url: "http://davids-restaurant.herokuapp.com/menu_items.json",
       params: {
-        category: Short_Name
+        category: ShortName
       }
 
     });

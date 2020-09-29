@@ -35,7 +35,7 @@
           <th>Special Instruction</th>
         </tr>
         <tr ng-repeat = "category in menu.categories">
-          <td> (<a href="" ng-click = "menu.logMenuItems(category.short_name);">
+          <td> (<a href="" ng-click = "menu.logMenuItems(category.id);">
             {{ category.id }} </a>)  </td>
           <td> {{ category.short_name }}  </td>
           <td> {{ category.name }}  </td>

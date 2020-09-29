@@ -1,0 +1,181 @@
+[MUSIC] Before we embark on making
+any kind of remote calls, we actually need to have some
+kind of remote server set up. And since the previous course
+built a restaurant app, which we're actually going to
+reimplement using AngularJS, that server is still set up and
+actually exposed to the entire Internet so we're going to go ahead and
+use that as our resource. The instructions in the URL's aware
+that service actually deployed and what API's that supports can be found on github.com/hu-ep-coursera/restaurantmenu--
+server. And if you scroll down, you'll see some
+documentation regarding this particular server and you'll see the that URL
+pattern's supports is to show me all the categories of the menu of our Chinese
+restaurant, show all the menus items. And show me all the menu items for a specific category together with
+information about the category. Okay, and here are the URLs
+that I deployed on Heroku for us to be able to retrieve this data. And for our purposes, all we're going to
+use is this one, /categories.json, and this one, /manualitems.json with a
+category for whatever category we specify. So I actually opened up both
+these URLs in my browser. You can see this one is /categories.json. And if we actually reload it again, we'll
+see what the categories.json response was. And we could look at the response
+itself as just an array of a bunch of object literals, and
+if we look at the preview, it will show us that array in a little
+bit more of a nicer fashion here. And we can open up the object, and you could see that it contains a couple
+of properties or kinds of few properties. One is name and the other one is
+short_name, and these are going to be important because these are the ones
+we're going to display and use. Also if we look at the other
+rest API that we have here is /menu_items.json For a particular category, and that is that
+short_name that we were looking at before. That's the same type of short_name that is
+being specified to identify our category. And then let's go ahead and
+reload that as well and let's click on that URL and
+let's go to the preview. We could see that it
+gives us categories and also gives us a list of menu items for
+that particular category. And what is inside of it doesn't
+really matter for our purposes. So what we would like to do, going back to
+our code editor, is code up an application that simply lists all the categories
+that our menu contains. And obviously, we're going to use
+the HTTP service to accomplish it. So right now, I'm located in my editor,
+in the Lecture25 folder, which is located in
+the fullstack-course5 examples folder. And here is our angular app
+called MenuCategoriesApp. And it's a fairly simple app. Let's go take a look at the HTML template
+that consist of just one controller called Menu Categories Controller with
+a controller as syntax with a label menu. And then what is going to do is going
+to create an unordered list And use ng-repeat to loop
+over menu.categories. So we're going to have
+a categories property on our menu label that's going to be
+attached to the dollar signs code for us automatically using
+our control s syntax. In each list item we're going to list
+the category's short name in parenthesis, and the category name. And that's really all we're going to do. Let's go ahead and
+take a look at out app dot JS. Let's actually close the file browser,
+So it'll be easier to see. Okay, in our app.js,
+we obviously declare our controller but we also declare the service
+code menu category service. Let's first take a look at
+this service that we coded up. So the main category service is injecting
+the HTTP service as you can see, and it's really structured just
+like a regular service would. It creates this service local
+variable that is equal to this. And it has this method called, get Menu
+Categories, which is our main method that we're going to use in order
+to accomplish our use case. Inside of the function, we're going to use
+our dollar sign http, the http service. And we're going to configure it using this
+config object which is an object literal, with a method of get which will tell
+the http service to issue a get, an http get request And the URL to
+our API, the categories.json API. Once we capture that response,
+which is of course a promise, we're going to go ahead and
+return that response to the caller. Now let's take a look at our caller,
+which is our menu categories controller. Well, it's going to use that
+promise to initialize some things on the dollar sign scope. Obviously, the first thing its going to
+do is actually call menu category service that get menu categories. That's as you remember
+going to return a promise. Then we're going to resolve
+the promise using the then function, expecting a response will actually
+responds that data to be that Json that is converted into an array of object
+literals, and we'll assign that array to the categories property of our menu
+which is obviously the this reference. And instead of dealing with an error if it
+occurs, right here by putting a comma and yet another function, we're just going to go ahead and
+catch all kind of function called catch. And we'll go ahead and do that here, since that looks
+a little bit more cleaner in the code. And here, we're not going to do much, we're just going to log
+something went terribly wrong. So let's go ahead and save that and
+let's go back to our browser. Let's go to our HTTP service that's
+already running using browser sync. And you can see that it
+listed all of our categories with a short name in parenthesis and
+the category name Right after that. Okay, so far so good. Let's enhance this just a little
+bit by having these short name letters be a link that I could click and
+have my app reach out yet again to the server which should return
+the data about that particular category. In other words All the menu
+items that category contains. Let's go back to the code editor and the first thing we want to do is create
+a link around this category.short_name. And the first thing we're
+going to do is surround our category.short_name with an a tag. So we're going to go ahead and
+say a href just so it appears to be a link, and
+we're going to close that. And we need to surround it, so
+we'll put the closing A tag right here. So the only other things left to do is to
+do ng-click, not double click, just click. And set that to our menu.logMenuItems, and past to it,
+what we're going to need to log, we're going to need to log something
+with a category .short_name. Once we do that, this category
+.short_name is going to get past our log menu items function, or method that
+is sitting on the controller instance. So let's go ahead and save that. Let's go to the app dot JS and
+let's actually create that method. Well, actually it's already created. All I have to do really is uncomment
+it and talk a little bit about it here. So as you can see, it's taking
+a shortName as an argument, and we're doing the same thing we did before. We're calling MenuCategoriesService
+dot getMenuForCategory. Passing it the short name meaning
+that identifying label for a particular category and then all we're
+doing here is really logging it on success and logging the error on failure. The important thing is to look at this get
+menu category method so lets go ahead and scroll down to the menu category service. And here I have this method already
+coded up, I just need to yet again, uncomment it, and
+let's go over it a little bit. So the get menu for category,
+is a function that takes a short name. So the HTTP call, the HTTP,
+the dollar sign HTTP, is very similar, except now we have a params property
+is part of our configuration object. And the params property is an object
+literal that has category and short name. This short_name,
+the value of our category in our params comes from the cut short_name that
+is passed into this function. And a category is
+the name of the parameter that should really go right
+here after a question mark. So question mark category equals whatever it is that the category
+the short name that they passed in. So since we want that done for
+us automatically by angular, we need to just provide this params object
+or params property with an object with object property names become
+the request name parameters, and the values become the values
+of those request parameters. And as usual, we return the response
+which ends nothing more than a promise. Okay, so let's save that and
+we should really be good to go. Let's go back to our browser, and you can see now every single
+one of these things is a link. Let's go ahead up and open our console so we can could see what happens
+when we click on one of these. Let's click on L, and
+you see an object got returned with menu times of 27 menu items for
+that particular category. Let's click on another one, let's click
+on C and you can see once again that object in the category is chicken,
+and the short_name is C. That's how we identified that particular
+category when we used it to request it. So if we looked at the network right
+now and let's clear that, go ahead and clear that, and click the C again, you'll
+see they were making an Ajax call to this URL which is /menu_items.json?category=C. So ?category=C is the result of us providing the params object
+as a configuration property. If we click that and look at its
+response so the preview of the response, you could see that it's the same
+thing That's coming back that we're actually seeing
+in the console right here. Okay, so that looks pretty
+good except one little thing. Let's go back to our code editor and see if we can notice something that
+kind of is bugging me a little bit. In every single call of our menu category
+service, we're providing the full URL Including what our rest
+API endpoints are going to be. What happens if tomorrow the next day, we decide to deploy the same service but
+with different URL? Let's say we want to give it a custom
+URL not a herokuapp.com URL. Well, we will have to change this URL in every single place that
+were calling out to it. That seems kind of dirty and efficient. Instead it would be great to be
+able to define the base url once than reuse it in every
+single circumstance. And we could do that
+with a special function that gets evoked on the angular
+module called constant. Let's go ahead and define that now. Called constant, and the constant takes the name that we're
+going to inject a constant with. Now, let's call it ApiBasePath. And, what that path is? Let's go ahead and scroll down, and
+grab the base path, which is right here, let's copy that. And that's going to be the constant
+that we're going to use every time when we inject it into different types
+of services, or at least in this case, was going to be injected into
+the menu categories services. So let's go ahead and
+inject that right here. And that one is called ApiBasePath, and we obviously also need to inject
+it into the actual function. And now, instead of providing the entire
+url, what we're going to do is we're going to shorten that a bit and
+say that's the only part of it. And then we're just going to say
+(ApiBasePath + "/categories.json"). In fact, if you look in
+the actual url property here I see that I have left my parens here. The parens really aren't needed
+here at all until I actually erase this part and need to make an addition or
+string concatenation here. Which is again, API based path plus
+that string and actually in this case we need to surround that with
+params so it knows it's one value. When I save that now,
+you could see that now we have one API-based path constant that
+we're able to reuse everywhere else. So if we were to redeploy this
+server at a different URL, we would only have to change
+that constant in one place. And wouldn't have to worry about
+the rest of the application, because it will automatically
+work by just appending the actual rest API
+endpoints to that base path. Let's go ahead and save that,
+and go back to the browser, and you can see that That everything
+is still working just fine. When I click,
+I get that object and obviously, I get the entire list of
+my categories that comprise the total list of the categories
+in this Chinese restaurants menu. Okay, so let's summarize. The $http service is based on the promise
+api exposed by the dollar sign q service. The dollar http is itself a function. It takes a single
+configuration object parameter of which URL property is
+the only required property. And then in returns a regular promise
+to be resolved with dot then function. Now when that promise gets resolved inside
+the .then function or the .successthen function repsonse.data property
+will hold the server data response. Sometimes referred to
+as a response payload. If the original response.data is JSON,
+Angular will automatically detect that and then will transform that response
+into a JavaScript object. So the JSON string will be turned into a JavaScript object we can
+immediately use in our code. Now, one more thing we used in
+this lecture is module.constant. And that can be used as an injectable
+constant that we can define once, and it will never change for
+the duration of the application. And then we can inject it into
+controllers, services, or other types of components.
